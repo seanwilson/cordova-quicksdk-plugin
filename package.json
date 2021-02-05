@@ -1,0 +1,26 @@
+{
+  "name": "QuickSDK",
+  "version": "0.0.1",
+  "description": "Cordova QuickSDK Plugin",
+  "cordova": {
+    "id": "com.undergroundcreative.quicksdk",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "quicksdk",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Underground Creative",
+  "license": "MIT",
+  "engines": {
+    "cordovaDependencies": {
+      "0.0.1": { 
+        "cordova-android": ">8.0.0"
+      }
+    }
+  }
+}
