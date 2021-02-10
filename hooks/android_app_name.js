@@ -38,5 +38,6 @@ module.exports = function(context) {
     console.log("android_app_name 9");
   }
   console.log("android_app_name 10");
+  console.log("android_app_name 11");
 
 };
