@@ -30,7 +30,6 @@
         <source-file src="src/android/files/res/values/qk_game_style.xml" target-dir="res/values" />
         <source-file src="src/android/files/res/layout/qk_game_view_loading.xml" target-dir="res/layout" />
         <source-file src="src/android/MyApplication.java" target-dir="src/com/undergroundcreative/QuickSDK" />
-        <framework src="src/android/files/libs/quicksdk_v2.7.1_20200309.jar" custom="true" />
     </platform>
     <hook type="after_prepare" src="hooks/android_app_name.js" />
 </plugin>
