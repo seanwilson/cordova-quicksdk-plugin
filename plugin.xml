@@ -14,17 +14,22 @@
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest" mode="merge">
-            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.GET_TASKS"></uses-permission>
-            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.ACCESS_WIFI_STATE"></uses-permission>
-            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.INTERNET"></uses-permission>
-            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.ACCESS_NETWORK_STATE"></uses-permission>
-            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.READ_PHONE_STATE"></uses-permission>
-            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.SYSTEM_ALERT_WINDOW"></uses-permission>
-            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.REQUEST_INSTALL_PACKAGES"></uses-permission>
+            <uses-permission android:name="android.permission.GET_TASKS"></uses-permission>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+            <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+            <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+            <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"></uses-permission>
+            <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"></uses-permission>
         </config-file>
         <source-file src="src/android/QuickSDK.java" target-dir="src/com/undergroundcreative/QuickSDK" />
-        <source-file src="src/android/files/libs" target-dir="./" />
+        <source-file src="src/android/files/libs/quicksdk_v2.7.1_20200309.jar" target-dir="libs" framework="true" />
+        <source-file src="src/android/files/libs/android-support-v4.jar" target-dir="libs" framework="true" />
+        <source-file src="src/android/files/libs/armeabi-v7a" target-dir="libs" />
+        <source-file src="src/android/files/libs/armeabi" target-dir="libs" />
+        <source-file src="src/android/files/libs/x86" target-dir="libs" />
+
         <source-file src="src/android/files/res/drawable" target-dir="res" />
         <source-file src="src/android/files/res/drawable-hdpi" target-dir="res" />
         <source-file src="src/android/files/res/values/qk_game_style.xml" target-dir="res/values" />
