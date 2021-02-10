@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="com.undergroundcreative.quicksdk" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="com-undergroundcreative-quicksdk" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>QuickSDK</name>
     <description>Cordova QuickSDK Plugin</description>
     <license>MIT</license>
@@ -8,11 +8,29 @@
         <clobbers target="QuickSDK" />
     </js-module>
     <platform name="android">
-        <config-file target="config.xml" parent="/*">
+        <config-file target="res/xml/config.xml" parent="/*">
             <feature name="QuickSDK">
-                <param name="android-package" value="com.undergroundcreative.QuickSDK"/>
+                <param name="android-package" value="com.undergroundcreative.QuickSDK.QuickSDK"/>
             </feature>
         </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest" mode="merge">
+            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.GET_TASKS"></uses-permission>
+            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.ACCESS_WIFI_STATE"></uses-permission>
+            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.INTERNET"></uses-permission>
+            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.ACCESS_NETWORK_STATE"></uses-permission>
+            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.READ_PHONE_STATE"></uses-permission>
+            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.SYSTEM_ALERT_WINDOW"></uses-permission>
+            <uses-permission android:name="com.undergroundcreative.quicksdk.permission.REQUEST_INSTALL_PACKAGES"></uses-permission>
+        </config-file>
         <source-file src="src/android/QuickSDK.java" target-dir="src/com/undergroundcreative/QuickSDK" />
+        <source-file src="src/android/files/libs" target-dir="./" />
+        <source-file src="src/android/files/res/drawable" target-dir="res" />
+        <source-file src="src/android/files/res/drawable-hdpi" target-dir="res" />
+        <source-file src="src/android/files/res/values/qk_game_style.xml" target-dir="res/values" />
+        <source-file src="src/android/files/res/layout/qk_game_view_loading.xml" target-dir="res/layout" />
+        <source-file src="src/android/MyApplication.java" target-dir="src/com/undergroundcreative/QuickSDK" />
+        <framework src="src/android/files/libs/quicksdk_v2.7.1_20200309.jar" custom="true" />
     </platform>
+    <hook type="after_prepare" src="hooks/android_app_name.js" />
 </plugin>
