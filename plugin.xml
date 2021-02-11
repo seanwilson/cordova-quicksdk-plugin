@@ -4,7 +4,7 @@
     <description>Cordova QuickSDK Plugin</description>
     <license>MIT</license>
     <keywords>cordova,quicksdk</keywords>
-    <js-module name="QuickSDK" src="www/QuickSDK.js">
+    <js-module name="QuickSDK" src="www/QuickSDKPlugin.js">
         <clobbers target="QuickSDK" />
     </js-module>
     <platform name="android">

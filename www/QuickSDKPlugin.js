@@ -1,5 +1,5 @@
 try{
-    cordova.define("com-undergroundcreative-quicksdk.QuickSDK", function(require, exports, module) {
+    cordova.define("com-undergroundcreative-quicksdk.QuickSDKPlugin", function(require, exports, module) {
 
         var argscheck = require('cordova/argscheck');
         var channel = require('cordova/channel');
@@ -10,7 +10,7 @@ try{
         // Tell cordova channel to wait on the CordovaInfoReady event
         //channel.waitForInitialization('onCordovaInfoReady');
         
-        function QuickSDK () {
+        function QuickSDKPlugin () {
             this.available = false;
             this.platform = null;
             this.version = null;
@@ -28,14 +28,14 @@ try{
             });
         }
         
-        QuickSDK.prototype.helloWorld = function (arg0, successCallback, errorCallback) {
-            //argscheck.checkArgs('fF', 'QuickSDK.getInfo', arguments);
+        QuickSDKPlugin.prototype.helloWorld = function (arg0, successCallback, errorCallback) {
+            //argscheck.checkArgs('fF', 'QuickSDKPlugin.getInfo', arguments);
             console.log("JS helloWorld 1");
-            exec(successCallback, errorCallback, 'QuickSDK', 'echo', [arg0]);
+            exec(successCallback, errorCallback, 'QuickSDKPlugin', 'echo', [arg0]);
             console.log("JS helloWorld 2");
         };
         
-        module.exports = new QuickSDK();
+        module.exports = new QuickSDKPlugin();
         
     });
 }
