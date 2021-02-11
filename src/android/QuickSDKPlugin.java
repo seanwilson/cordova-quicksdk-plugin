@@ -12,7 +12,7 @@ import org.json.JSONObject;
 /**
 * This class echoes a string called from JavaScript.
 */
-public class QuickSDK extends CordovaPlugin {
+public class QuickSDKPlugin extends CordovaPlugin {
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
