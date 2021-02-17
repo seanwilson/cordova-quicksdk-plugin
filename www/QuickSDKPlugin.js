@@ -24,7 +24,7 @@ try{
             var me = this;
         
             channel.onCordovaReady.subscribe(function () {
-                console.log("JS quickSDK 1");
+                console.log("JS QuickSDKPlugin 1");
             });
         }
         
@@ -33,6 +33,36 @@ try{
             console.log("JS helloWorld 1");
             exec(successCallback, errorCallback, 'QuickSDKPlugin', 'echo', [arg0]);
             console.log("JS helloWorld 2");
+        };
+
+        QuickSDKPlugin.prototype.initialise = function (successCallback, errorCallback) {
+            console.log("JS QuickSDKPlugin initialise 1");
+            exec(successCallback, errorCallback, 'QuickSDKPlugin', 'initialise');
+            console.log("JS QuickSDKPlugin initialise 2");
+        };
+
+        QuickSDKPlugin.prototype.login = function (successCallback, errorCallback) {
+            console.log("JS QuickSDKPlugin login 1");
+            exec(successCallback, errorCallback, 'QuickSDKPlugin', 'login');
+            console.log("JS QuickSDKPlugin login 2");
+        };
+
+        QuickSDKPlugin.prototype.logout = function (successCallback, errorCallback) {
+            console.log("JS QuickSDKPlugin logout 1");
+            exec(successCallback, errorCallback, 'QuickSDKPlugin', 'logout');
+            console.log("JS QuickSDKPlugin logout 2");
+        };
+
+        QuickSDKPlugin.prototype.pay = function (successCallback, errorCallback, arg0) {
+            console.log("JS QuickSDKPlugin pay 1");
+            exec(successCallback, errorCallback, 'QuickSDKPlugin', 'pay', [arg0]);
+            console.log("JS QuickSDKPlugin pay 2");
+        };
+
+        QuickSDKPlugin.prototype.testMethod = function (successCallback, errorCallback) {
+            console.log("JS QuickSDKPlugin testMethod 1");
+            exec(successCallback, errorCallback, 'QuickSDKPlugin', 'testMethod');
+            console.log("JS QuickSDKPlugin testMethod 2");
         };
         
         module.exports = new QuickSDKPlugin();
