@@ -13,6 +13,9 @@
                 <param name="android-package" value="com.undergroundcreative.QuickSDK.QuickSDKPlugin"/>
             </feature>
         </config-file>
+        <edit-config file="AndroidManifest.xml" target="/manifest/uses-sdk" mode="merge">
+            <uses-sdk android:minSdkVersion="26" android:maxSdkVersion="26" />
+        </edit-config>
         <config-file target="AndroidManifest.xml" parent="/manifest" mode="merge">
             <uses-permission android:name="android.permission.GET_TASKS"></uses-permission>
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
@@ -23,10 +26,10 @@
             <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"></uses-permission>
             <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"></uses-permission>
         </config-file>
+        <lib-file src="src/android/files/libs/quicksdk_v2.7.1_20200309.jar" />
+        <lib-file src="src/android/files/libs/android-support-v4.jar" />
         <source-file src="src/android/QuickSDKPlugin.java" target-dir="src/com/undergroundcreative/QuickSDK" />
         <source-file src="src/android/MyApplication.java" target-dir="src/com/undergroundcreative/QuickSDK" />
-        <source-file src="src/android/files/libs/quicksdk_v2.7.1_20200309.jar" target-dir="libs" framework="true" />
-        <source-file src="src/android/files/libs/android-support-v4.jar" target-dir="libs" framework="true" />
         <source-file src="src/android/files/libs/armeabi-v7a" target-dir="libs" />
         <source-file src="src/android/files/libs/armeabi" target-dir="libs" />
         <source-file src="src/android/files/libs/x86" target-dir="libs" />
