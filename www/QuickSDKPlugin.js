@@ -1,15 +1,14 @@
-try{
-    cordova.define("com-undergroundcreative-quicksdk.QuickSDKPlugin", function(require, exports, module) {
+cordova.define("com-undergroundcreative-quicksdk.QuickSDKPlugin", function(require, exports, module) {
 
         var argscheck = require('cordova/argscheck');
         var channel = require('cordova/channel');
         var exec = require('cordova/exec');
         var cordova = require('cordova');
-        
+
         //channel.createSticky('onCordovaInfoReady');
         // Tell cordova channel to wait on the CordovaInfoReady event
         //channel.waitForInitialization('onCordovaInfoReady');
-        
+
         function QuickSDKPlugin () {
             this.available = false;
             this.platform = null;
@@ -20,14 +19,14 @@ try{
             this.manufacturer = null;
             this.isVirtual = null;
             this.serial = null;
-        
+
             var me = this;
-        
+
             channel.onCordovaReady.subscribe(function () {
                 console.log("JS QuickSDKPlugin 1");
             });
         }
-        
+
         QuickSDKPlugin.prototype.helloWorld = function (arg0, successCallback, errorCallback) {
             //argscheck.checkArgs('fF', 'QuickSDKPlugin.getInfo', arguments);
             console.log("JS helloWorld 1");
@@ -53,9 +52,9 @@ try{
             console.log("JS QuickSDKPlugin logout 2");
         };
 
-        QuickSDKPlugin.prototype.pay = function (successCallback, errorCallback, arg0) {
+        QuickSDKPlugin.prototype.pay = function (successCallback, errorCallback, name, id, price) {
             console.log("JS QuickSDKPlugin pay 1");
-            exec(successCallback, errorCallback, 'QuickSDKPlugin', 'pay', [arg0]);
+            exec(successCallback, errorCallback, 'QuickSDKPlugin', 'pay', [name, id, price]);
             console.log("JS QuickSDKPlugin pay 2");
         };
 
@@ -64,11 +63,9 @@ try{
             exec(successCallback, errorCallback, 'QuickSDKPlugin', 'testMethod');
             console.log("JS QuickSDKPlugin testMethod 2");
         };
-        
+
         module.exports = new QuickSDKPlugin();
-        
-    });
-}
-catch(e){
-    console.log("Error defining plugin: " + JSON.stringify(e));
-}
+
+
+
+});
