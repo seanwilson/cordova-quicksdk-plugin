@@ -26,7 +26,8 @@ import com.quicksdk.notifier.LoginNotifier;
 import com.quicksdk.notifier.LogoutNotifier;
 import com.quicksdk.notifier.PayNotifier;
 import com.quicksdk.notifier.SwitchAccountNotifier;*/
-import com.undergroundcreative.quicksdktest3.MainActivity;
+//import com.undergroundcreative.quicksdktest3.MainActivity;
+import com.undergroundcreative.QuickSDK.QuickSDKPluginMainActivity;
 
 import java.util.UUID;
 
@@ -79,13 +80,13 @@ public class QuickSDKPlugin extends CordovaPlugin {
 
     public void login(CallbackContext callbackContext) {
         Log.d("quicksdk","login");
-        MainActivity.setCallbackContext(callbackContext);
+        QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
         com.quicksdk.User.getInstance().login(this.cordova.getActivity());
     }
 
     public void logout(CallbackContext callbackContext) {
         Log.d("quicksdk","logout");
-        MainActivity.setCallbackContext(callbackContext);
+        QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
         com.quicksdk.User.getInstance().logout(this.cordova.getActivity());
     }
 
@@ -96,7 +97,7 @@ public class QuickSDKPlugin extends CordovaPlugin {
     // https://stackoverflow.com/questions/28018809/how-to-call-activity-methods-from-cordova-plugin
     private void testMethod(CallbackContext callbackContext) {
         try {
-            MainActivity.testMethod(this.cordova.getActivity().getApplicationContext());
+            QuickSDKPluginMainActivity.testMethod(this.cordova.getActivity().getApplicationContext());
             callbackContext.success("testMethod succeeded");
         } catch (Exception e) {
             callbackContext.error("testMethod failed");
@@ -135,7 +136,7 @@ public class QuickSDKPlugin extends CordovaPlugin {
         orderInfo.setGoodsDesc(id);
         orderInfo.setExtrasParams(id); // Transparent transmission parameters
 
-        MainActivity.setCallbackContext(callbackContext);
+        QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
         com.quicksdk.Payment.getInstance().pay(this.cordova.getActivity(), orderInfo, roleInfo);
     }
 }
