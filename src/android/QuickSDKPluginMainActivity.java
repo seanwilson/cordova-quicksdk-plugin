@@ -100,8 +100,6 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
                 // 设置通知，用于监听初始化，登录，注销，支付及退出功能的返回值(必接)
                 initQkNotifiers();
                 // 请将下面语句中的第二与第三个参数，替换成QuickSDK后台申请的productCode和productKey值，目前的值仅作为示例
-                Log.d("this.productCode 1", this.productCode);
-                Log.d("this.productKey 1", this.productKey);
                 Sdk.getInstance().init(this, this.productCode, this.productKey);
             }
         } catch (Exception e) {
@@ -118,8 +116,6 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             //Success
             initQkNotifiers();
-            Log.d("this.productCode 2", this.productCode);
-            Log.d("this.productKey 2", this.productKey);
             Sdk.getInstance().init(this, this.productCode, this.productKey);
         } else {
             //Failure The logic here is based on the game. This is just a simulation of application failure. Exit the game and continue to apply or other logic.
