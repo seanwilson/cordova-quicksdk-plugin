@@ -17,38 +17,26 @@
        under the License.
  */
 
-//package com.undergroundcreative.quicksdktest3;
 package com.undergroundcreative.QuickSDK;
 
 import android.os.Bundle;
 import android.util.Log;
 
 import org.apache.cordova.*;
-import java.util.UUID;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.quicksdk.QuickSDK;
 import com.quicksdk.Sdk;
 import com.quicksdk.entity.GameRoleInfo;
-import com.quicksdk.entity.OrderInfo;
 import com.quicksdk.entity.UserInfo;
 import com.quicksdk.notifier.ExitNotifier;
 import com.quicksdk.notifier.InitNotifier;
@@ -60,6 +48,8 @@ import com.quicksdk.notifier.SwitchAccountNotifier;
 public class QuickSDKPluginMainActivity extends CordovaActivity {
 
     static CallbackContext callbackContext;
+    public String productCode;
+    public String productKey;
 
     public static void setCallbackContext(CallbackContext c){
         callbackContext = c;
@@ -80,6 +70,25 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
         loadUrl(launchUrl);
 
         try {
+            ApplicationInfo appInfo = getPackageManager().getApplicationInfo(this.getPackageName(), PackageManager.GET_META_DATA);
+            Bundle bundle = appInfo.metaData;
+            Log.d("appInfo", appInfo.toString());
+            Log.d("bundle", bundle.toString());
+            productCode = bundle.getString("com.undergroundcreative.QuickSDK.productCode");
+            productKey = bundle.getString("com.undergroundcreative.QuickSDK.productKey");
+            if(productCode != null) {
+                Log.d("productCode", productCode);
+            }
+            if(productKey != null) {
+                Log.d("productKey", productKey);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error reading productCode and productKey - " + e);
+        }
+        this.productCode = productCode;
+        this.productKey = productKey;
+
+        try {
             // check权限
             if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
                     || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
@@ -91,7 +100,9 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
                 // 设置通知，用于监听初始化，登录，注销，支付及退出功能的返回值(必接)
                 initQkNotifiers();
                 // 请将下面语句中的第二与第三个参数，替换成QuickSDK后台申请的productCode和productKey值，目前的值仅作为示例
-                Sdk.getInstance().init(this, "98991784817781599076180834044044", "93301150");
+                Log.d("this.productCode 1", this.productCode);
+                Log.d("this.productKey 1", this.productKey);
+                Sdk.getInstance().init(this, this.productCode, this.productKey);
             }
         } catch (Exception e) {
             // 异常 继续申请
@@ -107,7 +118,9 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             //Success
             initQkNotifiers();
-            Sdk.getInstance().init(this, "98991784817781599076180834044044", "93301150");
+            Log.d("this.productCode 2", this.productCode);
+            Log.d("this.productKey 2", this.productKey);
+            Sdk.getInstance().init(this, this.productCode, this.productKey);
         } else {
             //Failure The logic here is based on the game. This is just a simulation of application failure. Exit the game and continue to apply or other logic.
             System.exit(0);
