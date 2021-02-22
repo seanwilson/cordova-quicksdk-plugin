@@ -28,8 +28,8 @@
         <edit-config file="AndroidManifest.xml" target="/manifest/application" mode="merge">
             <application android:name="com.undergroundcreative.QuickSDK.MyApplication" />
         </edit-config>
-        <edit-config file="AndroidManifest.xml" target="/manifest/application/activity" mode="merge">
-            <activity android:name="com.undergroundcreative.QuickSDK.QuickSDKPluginMainActivity" />
+        <edit-config file="AndroidManifest.xml" target="/manifest/application/activity" mode="overwrite">
+            <activity android:name="com.undergroundcreative.QuickSDK.QuickSDKPluginMainActivity" android:label="QuickSDKPlugin" android:configChanges="orientation|keyboardHidden" />
         </edit-config>
         <lib-file src="src/android/files/libs/quicksdk_v2.7.1_20200309.jar" />
         <lib-file src="src/android/files/libs/android-support-v4.jar" />
