@@ -16,6 +16,8 @@
             </feature>
             <preference name="android-minSdkVersion" value="26" />
             <preference name="android-targetSdkVersion" value="26" />
+        </config-file>
+        <config-file target="res/values/strings.xml" parent="/resources">
             <string name="productCode">$PRODUCT_CODE</string>
             <string name="productKey">$PRODUCT_KEY</string>
         </config-file>
