@@ -30,9 +30,12 @@
         </edit-config>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity" mode="merge">
             <activity android:name="com.undergroundcreative.QuickSDK.QuickSDKPluginMainActivity" />
 =======
+=======
+>>>>>>> parent of a4dd9f7... Update plugin.xml
 =======
 >>>>>>> parent of a4dd9f7... Update plugin.xml
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="overwrite">
