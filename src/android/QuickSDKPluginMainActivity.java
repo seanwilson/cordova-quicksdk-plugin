@@ -48,11 +48,27 @@ import com.quicksdk.notifier.SwitchAccountNotifier;
 public class QuickSDKPluginMainActivity extends CordovaActivity {
 
     static CallbackContext callbackContext;
-    public String productCode;
-    public String productKey;
+    private String productCode;
+    private String productKey;
 
     public static void setCallbackContext(CallbackContext c){
         callbackContext = c;
+    }
+
+    private String getProductCode() {
+        return productCode;
+    }
+
+    private void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    private String getProductKey() {
+        return productKey;
+    }
+
+    private void setProductKey(String productKey) {
+        this.productKey = productKey;
     }
 
     @Override
@@ -74,51 +90,51 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
             Bundle bundle = appInfo.metaData;
             Log.d("appInfo", appInfo.toString());
             Log.d("bundle", bundle.toString());
-            productCode = bundle.getString("com.undergroundcreative.QuickSDK.productCode");
-            productKey = bundle.getString("com.undergroundcreative.QuickSDK.productKey");
-            if(productCode != null) {
-                Log.d("productCode", productCode);
+            setProductCode(bundle.getString("com.undergroundcreative.QuickSDK.productCode"));
+            setProductKey(bundle.getString("com.undergroundcreative.QuickSDK.productKey"));
+            if(getProductCode() != null) {
+                Log.d("productCode", getProductCode());
             }
-            if(productKey != null) {
-                Log.d("productKey", productKey);
+            if(getProductKey() != null) {
+                Log.d("productKey", getProductKey());
             }
         } catch (Exception e) {
             Log.e(TAG, "Error reading productCode and productKey - " + e);
         }
-        this.productCode = productCode;
-        this.productKey = productKey;
+        this.setProductCode(getProductCode());
+        this.setProductKey(getProductKey());
 
         try {
-            // check权限
+            // check permissions
             if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
                     || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
-                // 没有 ， 申请权限 权限数组
+                // Not got permissions - request them
                 ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_PHONE_STATE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
             } else {
-                // 有 则执行初始化
-                // 设置通知，用于监听初始化，登录，注销，支付及退出功能的返回值(必接)
+                // If yes, perform initialization
+                //// Set notifications to monitor the return value of initialization, login, logout, payment and logout functions (required)
                 initQkNotifiers();
-                // 请将下面语句中的第二与第三个参数，替换成QuickSDK后台申请的productCode和productKey值，目前的值仅作为示例
-                Sdk.getInstance().init(this, this.productCode, this.productKey);
+                Sdk.getInstance().init(this, this.getProductCode(), this.getProductKey());
             }
         } catch (Exception e) {
-            // 异常 继续申请
+            // Error - try again
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_PHONE_STATE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
         }
 
         com.quicksdk.Sdk.getInstance().onCreate(this);
     }
-    //申请权限的回调（结果）
+    //Callback for requesting permission (result)
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             //Success
             initQkNotifiers();
-            Sdk.getInstance().init(this, this.productCode, this.productKey);
+            Sdk.getInstance().init(this, this.getProductCode(), this.getProductKey());
         } else {
             //Failure The logic here is based on the game. This is just a simulation of application failure. Exit the game and continue to apply or other logic.
+            Sdk.getInstance().init(this, this.getProductCode(), this.getProductKey());
             System.exit(0);
             finish();
         }
@@ -163,25 +179,6 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
     protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         com.quicksdk.Sdk.getInstance().onActivityResult(this, requestCode, resultCode, data);
-    }
-
-/*
-    public void login() {
-        Log.d("quicksdk",""+com.quicksdk.Extend.getInstance().getDeviceID(MainActivity.this));
-        com.quicksdk.User.getInstance().login(MainActivity.this);
-    }
-
- */
-    // https://stackoverflow.com/questions/28018809/how-to-call-activity-methods-from-cordova-plugin
-    public static void testMethod(Context c) {
-        Log.d("Activity", "testMethod");
-        System.out.println("testMethod Activity");
-        try {
-
-        }
-        catch(Exception e){
-
-        }
     }
 
     public void setUserInfo() {
@@ -246,9 +243,8 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
                                 e.printStackTrace();
                             }
                             Log.d("MainActivity", "JSON obj: " + obj.toString());
-                            Log.d("MainActivity", "callbackContext: " + callbackContext.toString());
-                            //callbackContext.success(obj);
-                            callbackContext.success("Login successful oh yeah");
+                            Log.d("login callbackContext", callbackContext.toString());
+                            callbackContext.success(obj);
                             Log.d("MainActivity", "about to setUserInfo");
                             // After logging in successfully, when entering the game, you need to submit user information to the channel
                             setUserInfo();
@@ -274,6 +270,7 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
                     @Override
                     public void onSuccess() {
                         Log.d("MainActivity", "Logout successful");
+                        Log.d("logout callbackContext", callbackContext.toString());
                         callbackContext.success("Logout successful");
                     }
 
@@ -304,7 +301,7 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
                         Log.d("MainActivity", "Cancelled account switching");
                     }
                 })
-                // 5.设置支付通知(必接)
+                // 5.Set payment notification (required)
                 .setPayNotifier(new PayNotifier() {
 
                     @Override
@@ -317,6 +314,7 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        Log.d("pay callbackContext", callbackContext.toString());
                         callbackContext.success(obj);
                     }
 
@@ -348,5 +346,4 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
                     }
                 });
     }
-
 }

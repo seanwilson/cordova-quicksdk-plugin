@@ -4,6 +4,7 @@ package com.undergroundcreative.QuickSDK;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;*/
+import android.content.Context;
 import android.util.Log;
 
 import org.apache.cordova.CordovaPlugin;
@@ -17,6 +18,7 @@ import org.json.JSONException;
 
 import com.quicksdk.QuickSDK;
 import com.quicksdk.Sdk;*/
+import com.quicksdk.User;
 import com.quicksdk.entity.GameRoleInfo;
 import com.quicksdk.entity.OrderInfo;
 /*import com.quicksdk.entity.UserInfo;
@@ -44,27 +46,34 @@ public class QuickSDKPlugin extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        final CordovaPlugin plugin = (CordovaPlugin) this;
         if (action.equals("echo")) {
             String message = args.getString(0);
             this.echo(message, callbackContext);
             return true;
+        } else if (action.equals("isLoggedin")) {
+            this.isLoggedin(callbackContext);
+            return true;
         } else if (action.equals("login")) {
             this.login(callbackContext);
             return true;
+            /*cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    Log.d("quicksdk","login");
+                    Log.d("about to set login callbackContext", callbackContext.toString());
+                    QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
+                    com.quicksdk.User.getInstance().login(plugin.cordova.getActivity());
+                }
+            });
+            return true;*/
         } else if (action.equals("logout")) {
             this.logout(callbackContext);
-            return true;
-        } else if (action.equals("initialise")) {
-            this.initialise(callbackContext);
             return true;
         } else if (action.equals("pay")) {
             String name = args.getString(0);
             String id = args.getString(1);
             Double price = args.getDouble(2);
             this.pay(name, id, price, callbackContext);
-            return true;
-        } else if (action.equals("testMethod")) {
-            this.testMethod(callbackContext);
             return true;
         }
         return false;
@@ -78,30 +87,30 @@ public class QuickSDKPlugin extends CordovaPlugin {
         }
     }
 
+    public void isLoggedin(CallbackContext callbackContext) {
+        Log.d("quicksdk","isLoggedin");
+        try {
+            QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
+            boolean isLoggedin = User.getInstance().isLogin(this.cordova.getActivity());
+            Log.d("quicksdk isLoggedin", String.valueOf(isLoggedin));
+            callbackContext.success(String.valueOf(isLoggedin));
+        } catch (Exception e) {
+            callbackContext.error(e.toString());
+        }
+    }
+
     public void login(CallbackContext callbackContext) {
         Log.d("quicksdk","login");
+        Log.d("about to set login callbackContext", callbackContext.toString());
         QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
         com.quicksdk.User.getInstance().login(this.cordova.getActivity());
     }
 
     public void logout(CallbackContext callbackContext) {
         Log.d("quicksdk","logout");
+        Log.d("about to set logout callbackContext", callbackContext.toString());
         QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
         com.quicksdk.User.getInstance().logout(this.cordova.getActivity());
-    }
-
-    // not used - safe to delete
-    private void initialise(CallbackContext callbackContext) {
-        //com.quicksdk.Sdk.getInstance().onCreate(this.cordova.getActivity());
-    }
-    // https://stackoverflow.com/questions/28018809/how-to-call-activity-methods-from-cordova-plugin
-    private void testMethod(CallbackContext callbackContext) {
-        try {
-            QuickSDKPluginMainActivity.testMethod(this.cordova.getActivity().getApplicationContext());
-            callbackContext.success("testMethod succeeded");
-        } catch (Exception e) {
-            callbackContext.error("testMethod failed");
-        }
     }
 
     private void pay(String name, String id, Double price, CallbackContext callbackContext) {
@@ -136,6 +145,7 @@ public class QuickSDKPlugin extends CordovaPlugin {
         orderInfo.setGoodsDesc(id);
         orderInfo.setExtrasParams(id); // Transparent transmission parameters
 
+        Log.d("about to set pay callbackContext", callbackContext.toString());
         QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
         com.quicksdk.Payment.getInstance().pay(this.cordova.getActivity(), orderInfo, roleInfo);
     }

@@ -8,34 +8,14 @@ var cordova = require('cordova');
 //channel.waitForInitialization('onCordovaInfoReady');
 
 function QuickSDKPlugin () {
-    this.available = false;
-    this.platform = null;
-    this.version = null;
-    this.uuid = null;
-    this.cordova = null;
-    this.model = null;
-    this.manufacturer = null;
-    this.isVirtual = null;
-    this.serial = null;
-
-    var me = this;
-
     channel.onCordovaReady.subscribe(function () {
         console.log("JS QuickSDKPlugin 1");
     });
 }
 
-QuickSDKPlugin.prototype.helloWorld = function (arg0, successCallback, errorCallback) {
-    //argscheck.checkArgs('fF', 'QuickSDKPlugin.getInfo', arguments);
-    console.log("JS helloWorld 1");
-    exec(successCallback, errorCallback, 'QuickSDKPlugin', 'echo', [arg0]);
-    console.log("JS helloWorld 2");
-};
-
-QuickSDKPlugin.prototype.initialise = function (successCallback, errorCallback) {
-    console.log("JS QuickSDKPlugin initialise 1");
-    exec(successCallback, errorCallback, 'QuickSDKPlugin', 'initialise');
-    console.log("JS QuickSDKPlugin initialise 2");
+    console.log("JS QuickSDKPlugin isLoggedin 1");
+    exec(successCallback, errorCallback, 'QuickSDKPlugin', 'isLoggedin');
+    console.log("JS QuickSDKPlugin isLoggedin 2");
 };
 
 QuickSDKPlugin.prototype.login = function (successCallback, errorCallback) {
@@ -54,12 +34,6 @@ QuickSDKPlugin.prototype.pay = function (successCallback, errorCallback, name, i
     console.log("JS QuickSDKPlugin pay 1");
     exec(successCallback, errorCallback, 'QuickSDKPlugin', 'pay', [name, id, price]);
     console.log("JS QuickSDKPlugin pay 2");
-};
-
-QuickSDKPlugin.prototype.testMethod = function (successCallback, errorCallback) {
-    console.log("JS QuickSDKPlugin testMethod 1");
-    exec(successCallback, errorCallback, 'QuickSDKPlugin', 'testMethod');
-    console.log("JS QuickSDKPlugin testMethod 2");
 };
 
 module.exports = new QuickSDKPlugin();
