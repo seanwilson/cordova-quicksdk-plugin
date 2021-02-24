@@ -41,6 +41,9 @@
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity" mode="merge">
             <activity android:name="com.undergroundcreative.QuickSDK.QuickSDKPluginMainActivity" />
         </edit-config>
+        <edit-config file="AndroidManifest.xml" target="/manifest/uses-sdk" mode="merge">
+            <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="26" />
+        </edit-config>
         <lib-file src="src/android/files/libs/quicksdk_v2.7.1_20200309.jar" />
         <lib-file src="src/android/files/libs/android-support-v4.jar" />
         <source-file src="src/android/QuickSDKPlugin.java" target-dir="src/com/undergroundcreative/QuickSDK" />
