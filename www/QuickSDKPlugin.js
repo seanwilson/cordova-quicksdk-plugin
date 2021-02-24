@@ -13,6 +13,7 @@ function QuickSDKPlugin () {
     });
 }
 
+QuickSDKPlugin.prototype.isLoggedin = function (successCallback, errorCallback) {
     console.log("JS QuickSDKPlugin isLoggedin 1");
     exec(successCallback, errorCallback, 'QuickSDKPlugin', 'isLoggedin');
     console.log("JS QuickSDKPlugin isLoggedin 2");
