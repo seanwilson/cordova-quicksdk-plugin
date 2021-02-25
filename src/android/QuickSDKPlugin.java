@@ -14,10 +14,10 @@ import org.apache.cordova.CordovaWebView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-/*import org.json.JSONObject;
+/*import org.json.JSONObject;*/
 
 import com.quicksdk.QuickSDK;
-import com.quicksdk.Sdk;*/
+import com.quicksdk.Sdk;
 import com.quicksdk.User;
 import com.quicksdk.entity.GameRoleInfo;
 import com.quicksdk.entity.OrderInfo;
@@ -74,6 +74,9 @@ public class QuickSDKPlugin extends CordovaPlugin {
             String id = args.getString(1);
             Double price = args.getDouble(2);
             this.pay(name, id, price, callbackContext);
+            return true;
+        } else if (action.equals("exit")) {
+            this.exit(callbackContext);
             return true;
         }
         return false;
@@ -148,5 +151,12 @@ public class QuickSDKPlugin extends CordovaPlugin {
         Log.d("about to set pay callbackContext", callbackContext.toString());
         QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
         com.quicksdk.Payment.getInstance().pay(this.cordova.getActivity(), orderInfo, roleInfo);
+    }
+
+    public void exit(CallbackContext callbackContext) {
+        Log.d("quicksdk","exit");
+        Log.d("about to set exit callbackContext", callbackContext.toString());
+        QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
+        Sdk.getInstance().exit(this.cordova.getActivity());
     }
 }

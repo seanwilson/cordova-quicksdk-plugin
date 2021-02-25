@@ -37,4 +37,10 @@ QuickSDKPlugin.prototype.pay = function (successCallback, errorCallback, name, i
     console.log("JS QuickSDKPlugin pay 2");
 };
 
+QuickSDKPlugin.prototype.exit = function (successCallback, errorCallback) {
+    console.log("JS QuickSDKPlugin exit 1");
+    exec(successCallback, errorCallback, 'QuickSDKPlugin', 'exit');
+    console.log("JS QuickSDKPlugin exit 2");
+};
+
 module.exports = new QuickSDKPlugin();
