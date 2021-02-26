@@ -288,6 +288,8 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
                         if (userInfo != null) {
                             Log.d("MainActivity", "Switched account successfully" + "\n\r" + "UserID:  " + userInfo.getUID() + "\n\r" + "UserName:  " + userInfo.getUserName() + "\n\r"
                                     + "Token:  " + userInfo.getToken());
+                            // SW added 26/2/21 - don't know if need to do this? See 2.6.4 of doc-13
+                            setUserInfo();
                         }
                     }
 
