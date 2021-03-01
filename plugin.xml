@@ -27,5 +27,4 @@
         <source-file src="src/android/files/res/values/qk_game_style.xml" target-dir="res/values" />
         <source-file src="src/android/files/res/layout/qk_game_view_loading.xml" target-dir="res/layout" />
     </platform>
-    <hook type="after_prepare" src="hooks/android_app_name.js" />
 </plugin>
