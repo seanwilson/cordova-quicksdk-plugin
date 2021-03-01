@@ -14,7 +14,6 @@
             </feature>
         </config-file>
         <lib-file src="src/android/files/libs/quicksdk_v2.7.1_20200309.jar" />
-        <lib-file src="src/android/files/libs/android-support-v4.jar" />
         <source-file src="src/android/QuickSDKPlugin.java" target-dir="src/com/undergroundcreative/QuickSDK" />
         <source-file src="src/android/MyApplication.java" target-dir="src/com/undergroundcreative/QuickSDK" />
         <source-file src="src/android/QuickSDKPluginMainActivity.java" target-dir="src/com/undergroundcreative/QuickSDK" />
