@@ -44,6 +44,7 @@ import com.quicksdk.notifier.LoginNotifier;
 import com.quicksdk.notifier.LogoutNotifier;
 import com.quicksdk.notifier.PayNotifier;
 import com.quicksdk.notifier.SwitchAccountNotifier;
+import com.quicksdk.Extend;
 
 public class QuickSDKPluginMainActivity extends CordovaActivity {
 
@@ -235,10 +236,14 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
                             Log.d("MainActivity", "Login success!" + "\n\r" + "UserID:  " + userInfo.getUID() + "\n\r" + "UserName:  " + userInfo.getUserName() + "\n\r"
                                     + "Token:  " + userInfo.getToken());
 
+                            int channelID = Extend.getInstance().getChannelType();
+                            Log.d("channelID", String.valueOf(channelID));
+
                             JSONObject obj = new JSONObject();
                             try {
                                 obj.put("result", "Successfully logged in");
                                 obj.put("UserName", userInfo.getUserName());
+                                obj.put("channelID", channelID);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
