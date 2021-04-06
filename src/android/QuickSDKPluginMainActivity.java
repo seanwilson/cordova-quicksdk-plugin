@@ -345,7 +345,7 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
                         Log.d("MainActivity", "about to finish");
                         callbackContext.success("Exit success");
                         // The exit operation of the game itself, the finish() below is just an example
-                        finish();
+                        finishAndRemoveTask();
                     }
 
                     @Override
