@@ -244,6 +244,7 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
                                 obj.put("result", "Successfully logged in");
                                 obj.put("UserName", userInfo.getUserName());
                                 obj.put("channelID", channelID);
+                                obj.put("uid", userInfo.getUID());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
