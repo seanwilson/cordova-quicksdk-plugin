@@ -1,9 +1,5 @@
 package com.undergroundcreative.QuickSDK;
 
-/*import android.Manifest;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;*/
 import android.content.Context;
 import android.util.Log;
 
@@ -14,34 +10,21 @@ import org.apache.cordova.CordovaWebView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-/*import org.json.JSONObject;*/
 
 import com.quicksdk.QuickSDK;
 import com.quicksdk.Sdk;
 import com.quicksdk.User;
 import com.quicksdk.entity.GameRoleInfo;
 import com.quicksdk.entity.OrderInfo;
-/*import com.quicksdk.entity.UserInfo;
-import com.quicksdk.notifier.ExitNotifier;
-import com.quicksdk.notifier.InitNotifier;
-import com.quicksdk.notifier.LoginNotifier;
-import com.quicksdk.notifier.LogoutNotifier;
-import com.quicksdk.notifier.PayNotifier;
-import com.quicksdk.notifier.SwitchAccountNotifier;*/
-//import com.undergroundcreative.quicksdktest3.MainActivity;
 import com.undergroundcreative.QuickSDK.QuickSDKPluginMainActivity;
 
 import java.util.UUID;
 
-/**
-* This class echoes a string called from JavaScript.
-*/
 public class QuickSDKPlugin extends CordovaPlugin {
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        // your init code here
     }
 
     @Override
@@ -118,9 +101,6 @@ public class QuickSDKPlugin extends CordovaPlugin {
 
     private void pay(String name, String id, Double price, CallbackContext callbackContext) {
 
-        // example of how to use callback to js
-        //callbackContext.success("Payment succeeded and shit");
-        //callbackContext.error("Payment failed");
         Log.d("QuickSDKPlugin","name " + name);
         Log.d("QuickSDKPlugin","id " + id);
         Log.d("QuickSDKPlugin","price " + price);
