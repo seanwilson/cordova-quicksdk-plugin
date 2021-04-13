@@ -10,6 +10,7 @@ import org.apache.cordova.CordovaWebView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.quicksdk.QuickSDK;
 import com.quicksdk.Sdk;
@@ -19,6 +20,13 @@ import com.quicksdk.entity.OrderInfo;
 import com.undergroundcreative.QuickSDK.QuickSDKPluginMainActivity;
 
 import java.util.UUID;
+import java.lang.String;
+
+// https://github.com/TooTallNate/Java-WebSocket
+import java.net.URI;
+import java.net.URISyntaxException;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
 
 public class QuickSDKPlugin extends CordovaPlugin {
 
@@ -87,14 +95,14 @@ public class QuickSDKPlugin extends CordovaPlugin {
 
     public void login(CallbackContext callbackContext) {
         Log.d("quicksdk","login");
-        Log.d("about to set login callbackContext", callbackContext.toString());
+        Log.d("login callbackContext", callbackContext.toString());
         QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
         com.quicksdk.User.getInstance().login(this.cordova.getActivity());
     }
 
     public void logout(CallbackContext callbackContext) {
         Log.d("quicksdk","logout");
-        Log.d("about to set logout callbackContext", callbackContext.toString());
+        Log.d("logout callbackContext", callbackContext.toString());
         QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
         com.quicksdk.User.getInstance().logout(this.cordova.getActivity());
     }
@@ -128,14 +136,76 @@ public class QuickSDKPlugin extends CordovaPlugin {
         orderInfo.setGoodsDesc(id);
         orderInfo.setExtrasParams(id); // Transparent transmission parameters
 
-        Log.d("about to set pay callbackContext", callbackContext.toString());
+        Log.d("pay callbackContext", callbackContext.toString());
         QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
-        com.quicksdk.Payment.getInstance().pay(this.cordova.getActivity(), orderInfo, roleInfo);
+
+        Log.d("QuickSDKPlugin", "Create socket");
+
+        URI uri;
+        try {
+            uri = new URI(String.format("ws://m1.fengkuangtiyu.cn/footballc/%s", orderInfo.getCpOrderID()));
+            Log.d("QuickSDKPlugin", uri.toString());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        WebSocketClient mWebSocketClient = new WebSocketClient(uri) {
+            @Override
+            public void onOpen(ServerHandshake serverHandshake) {
+                Log.i("Websocket", "Opened");
+                com.quicksdk.Payment.getInstance().pay(cordova.getActivity(), orderInfo, roleInfo);
+            }
+
+            @Override
+            public void onMessage(String message) {
+                Log.d("Websocket", "Received OnMessage! " + message);
+                try {
+                    JSONObject mainObject = new JSONObject(message);
+                    JSONObject msgObject = mainObject.getJSONObject("message");
+                    String status = msgObject.getString("status");
+                    String extras_params = msgObject.getString("extras_params");
+                    Log.i("status", status);
+
+                    if (status.equals("0")){
+                        Log.d("QuickSDKPlugin", "About to give IAP! ");
+                        JSONObject obj = new JSONObject();
+                        try {
+                            obj.put("result", "Successfully purchased");
+                            obj.put("productId", extras_params);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("pay callbackContext", callbackContext.toString());
+                        callbackContext.success(obj);
+                    } else {
+                        callbackContext.error("Payment error: " + status);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callbackContext.error("Payment error: " + e.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onClose(int i, String s, boolean b) {
+                Log.i("Websocket", "Closed " + s);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Log.i("Websocket", "Error " + e.getMessage());
+                callbackContext.error("Payment error: " + e.getMessage());
+            }
+        };
+        mWebSocketClient.connect();
+
     }
 
     public void exit(CallbackContext callbackContext) {
         Log.d("quicksdk","exit");
-        Log.d("about to set exit callbackContext", callbackContext.toString());
+        Log.d("exit callbackContext", callbackContext.toString());
         QuickSDKPluginMainActivity.setCallbackContext(callbackContext);
         Sdk.getInstance().exit(this.cordova.getActivity());
     }

@@ -315,15 +315,6 @@ public class QuickSDKPluginMainActivity extends CordovaActivity {
                     @Override
                     public void onSuccess(String sdkOrderID, String cpOrderID, String extrasParams) {
                         Log.d("MainActivity", "payment successful，sdkOrderID:" + sdkOrderID + ",cpOrderID:" + cpOrderID);
-                        JSONObject obj = new JSONObject();
-                        try {
-                            obj.put("result", "Successfully purchased");
-                            obj.put("productId", extrasParams);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Log.d("pay callbackContext", callbackContext.toString());
-                        callbackContext.success(obj);
                     }
 
                     @Override

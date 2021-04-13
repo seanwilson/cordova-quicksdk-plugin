@@ -14,6 +14,7 @@
             </feature>
         </config-file>
         <framework src="com.android.support:support-v4:+" />
+        <framework src="org.java-websocket:Java-WebSocket:1.5.1" />
         <lib-file src="src/android/files/libs/quicksdk_v2.7.1_20200309.jar" />
         <source-file src="src/android/QuickSDKPlugin.java" target-dir="src/com/undergroundcreative/QuickSDK" />
         <source-file src="src/android/MyApplication.java" target-dir="src/com/undergroundcreative/QuickSDK" />
